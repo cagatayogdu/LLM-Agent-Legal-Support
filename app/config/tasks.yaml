@@ -1,0 +1,388 @@
+legal_text_clarifier:
+  description: >
+    Analiz edilecek hukuki vaka aşağıdadır:
+    {topic}
+
+    Yukarıdaki kullanıcıdan gelen ham hukuki metni analiz et ve yapılandır. Problemin türünü tespit et, 
+    önemli bilgileri çıkar, belirsizlikleri işaretle. Bu analiz diğer ajanların doğru yaklaşım 
+    geliştirmesi için kritik.
+  expected_output: >
+    {
+      "problem_türü": "Tespit edilen hukuki problem türü (miras, sözleşme, boşanma, iş hukuku vb.)",
+      "problem_kategorisi": "Hesaplama gereken/gerektirmeyen, karmaşık/basit vb.",
+      "açık_hukuki_metin": "Netleştirilmiş ve düzenlenmiş metin",
+      "tespit_edilen_kişiler": [
+        {
+          "isim": "Kişi adı",
+          "rol": "Hukuki rolü ve pozisyonu",
+          "ilişkiler": ["Diğer taraflarla ilişkileri"],
+          "önem_derecesi": "Bu kişinin problemdeki önemi"
+        }
+      ],
+      "tespit_edilen_finansal_bilgiler": [
+        {
+          "değer": "Mali değer ve miktarı",
+          "konu": "İlgili konu ve bağlamı",
+          "açıklama": "Detaylı açıklama ve önemi",
+          "hesaplama_gerekli": "Bu değer için hesaplama gerekip gerekmediği"
+        }
+      ],
+      "tespit_edilen_tarihler": [
+        {
+          "tarih": "Önemli tarih",
+          "olay": "İlgili olay ve önemi",
+          "hukuki_sonucu": "Bu tarihin hukuki sonuçları"
+        }
+      ],
+      "tespit_edilen_hukuki_konular": ["Ana hukuki konular ve alt kategoriler"],
+      "tespit_edilen_yasal_dayanaklar": [
+        {
+          "kaynak": "Yasal dayanak (kanun, madde vb.)",
+          "ilgili_konu": "İlgili konu",
+          "uygulama_alanı": "Bu dayanağın probleme uygulanma şekli"
+        }
+      ],
+      "tanımlanan_belirsizlikler": [
+        {
+          "konu": "Belirsiz alan",
+          "açıklama": "Belirsizlik açıklaması",
+          "kritiklik": "Bu belirsizliğin problemin çözümündeki etkisi",
+          "çözüm_yolu": "Bu belirsizliği gidermek için yapılması gerekenler"
+        }
+      ],
+      "analiz_özeti": "Problemin genel değerlendirmesi ve yaklaşım önerisi"
+    }
+
+case_law_rag_analysis_task:
+  description: >
+    {topic}
+    {feedback}
+    
+    **DETAY REQUİREMENTİ: Her emsal karar ve içtihat için KAPSAMLI, UZUN ve DETAYLI açıklamalar yap. Kısa, genel geçer cevaplar verme. Her analiz için en az 4-5 cümlelik derinlemesine değerlendirme.**
+    
+    Text clarifier'dan gelen problem türü analizine göre vektör veritabanından en alakalı 
+    emsal kararlar, içtihatlar ve mevzuat bilgisi bul. Problem türüne göre arama stratejini 
+    adapte et. Sadece en alakalı ve güvenilir kaynaklardan yüksek benzerlik skorlu sonuçları döndür.
+    
+    PROBLEM TÜRÜNE GÖRE ARAMA STRATEJİSİ:
+    - Miras/Tenkis: TMK maddelerini, saklı pay hesaplamaları, Yargıtay kararlarını öncelikle
+    - Sözleşme: TBK maddeleri, sözleşme hukuku içtihatları, ifa/temerrüt kararları
+    - İş Hukuku: İş Kanunu, kıdem/ihbar tazminatı, işçi hakları kararları
+    - Boşanma: TMK evlilik maddeleri, nafaka, mal rejimi kararları
+    
+    Her durumda: Güncel içtihatları, benzer tutarlı kararları, praktik uygulamaları ara.
+    
+    **HER EMSAL KARAR İÇİN UZUN VE DETAYLI AÇIKLAMA YAP. SADECE BAŞLIK DEĞİL, KAPSAMLI ANALİZ VER.**
+  expected_output: >
+    {
+      "problem_türü_analizi": "Tespit edilen problem türü ve arama yaklaşımı",
+      "emsal_kararlar": [
+        {
+          "karar_no": "Yargıtay/mahkeme karar numarası",
+          "mahkeme": "Karar veren mahkeme",
+          "tarih": "Karar tarihi",
+          "benzerlik_skoru": 0.0,
+          "detaylı_özet": "Kararın detaylı özeti ve hukuki gerekçeleri",
+          "hukuki_dayanak": ["İlgili kanun maddeleri ve hukuki dayanaklar"],
+          "vakaya_uygulanabilirlik": "Bu kararın mevcut vakaya nasıl uygulanabileceği",
+          "önemli_noktalar": ["Kararda dikkat çeken önemli hukuki noktalar"],
+          "pratik_sonuçlar": "Bu kararın pratikte ne anlama geldiği"
+        }
+      ],
+      "hukuki_precedentler": [
+        {
+          "konu": "Precedent konusu",
+          "genel_yaklaşım": "Mahkemelerin bu konudaki genel yaklaşımı",
+          "istikrar_durumu": "İçtihatın istikrarlı olup olmadığı",
+          "son_gelişmeler": "Bu konudaki son değişiklikler",
+          "uygulama_ipuçları": "Pratikte nasıl uygulandığı"
+        }
+      ],
+      "mevzuat_analizi": {
+        "ilgili_maddeler": ["Problem ile doğrudan ilgili kanun maddeleri"],
+        "değişiklikler": ["Son dönemde yapılan önemli değişiklikler"],
+        "uygulama_sorunları": ["Pratikte karşılaşılan sorunlar"]
+      },
+      "confidence_skoru": 0.0,
+      "eksik_bilgiler": ["Daha fazla araştırma gereken spesifik alanlar"],
+      "önerilen_ek_araştırmalar": ["RAG'de bulunamayan ve web'de aranması gereken konular"]
+    }
+
+legal_web_search_task:
+  description: > 
+    {topic}
+    {feedback}
+    
+    **DETAY REQUİREMENTİ: Her güncel bulgu, mevzuat ve uygulama için KAPSAMLI, UZUN ve DETAYLI açıklamalar yap. Genel geçer, kısa cevaplar verme. Her konu için en az 4-5 cümlelik kapsamlı analiz.**
+    
+    Problem türüne göre web araması ile güncel mevzuat, içtihatlar, formüller, 
+    pratik bilgiler ve şablonlar bul. RAG'de eksik kalan bilgileri tamamla.
+    Güncel uygulamaları, değişiklikleri, praktik ipuçlarını ara.
+    
+    PROBLEM TÜRÜNE GÖRE WEB ARAMA FOKUSLERİ:
+    - Hesaplama gereken problemler: Formüller, hesaplama örnekleri, güncel oranlar
+    - Süreç odaklı problemler: Adım adım kılavuzlar, başvuru şekilleri, süreler
+    - Belge odaklı problemler: Şablonlar, örnek dilekçeler, başvuru formları
+    - Karmaşık problemler: Uzman yorumları, detaylı analizler, alternatif yaklaşımlar
+    
+    **HER GÜNCEL BİLGİ VE UYGULAMA İÇİN UZUN VE DETAYLI AÇIKLAMA YAP. SADECE LİSTE DEĞİL, KAPSAMLI ANALİZ VER.**
+  expected_output: >
+    {
+      "güncel_mevzuat": {
+        "ana_maddeler": [
+          {
+            "madde_no": "Kanun madde numarası",
+            "tam_metin": "Maddenin güncel tam metni",
+            "vakaya_uygulanabilirlik": "Bu maddenin probleme uygulanması",
+            "son_değişiklikler": "Yakın dönemde yapılan değişiklikler",
+            "pratik_uygulama": "Pratikte nasıl uygulandığı",
+            "dikkat_edilecek_noktalar": ["Uygulamada dikkat edilmesi gerekenler"]
+          }
+        ],
+        "ilgili_yönetmelikler": ["Problem ile ilgili yönetmelik ve tebliğler"]
+      },
+      "güncel_içtihatlar": [
+        {
+          "mahkeme": "Karar veren mahkeme",
+          "karar_özeti": "Güncel kararın özeti",
+          "değişen_yaklaşım": "Önceki uygulamalardan farklılıklar",
+          "pratik_etki": "Bu kararın pratiğe etkisi",
+          "benzer_problemlere_uygulanabilirlik": "Mevcut probleme uygulanabilirlik"
+        }
+      ],
+      "hesaplama_bilgileri": {
+        "formüller": [
+          {
+            "hesaplama_türü": "Hesaplama konusu",
+            "formül": "Detaylı hesaplama formülü",
+            "yasal_dayanak": "Formülün yasal dayanağı",
+            "adım_adım_örnek": "Detaylı hesaplama örneği",
+            "dikkat_edilecek_noktalar": ["Hesaplamada dikkat edilecek hususlar"],
+            "güncel_oranlar": "Kullanılacak güncel oranlar ve değerler"
+          }
+        ],
+        "hesaplama_araçları": ["Online hesaplama araçları ve kaynakları"]
+      },
+      "pratik_süreç_bilgileri": {
+        "adım_adım_kılavuz": [
+          {
+            "adım_no": 1,
+            "adım_açıklaması": "Detaylı adım açıklaması",
+            "gerekli_belgeler": ["Bu adım için gerekli belgeler"],
+            "süre": "Bu adımın tahmini süresi",
+            "maliyet": "Bu adımın maliyeti",
+            "dikkat_noktaları": ["Bu adımda dikkat edilecekler"],
+            "alternatif_yöntemler": ["Bu adım için alternatif yaklaşımlar"]
+          }
+        ],
+        "kritik_süreler": [
+          {
+            "süre_türü": "Süre konusu",
+            "süre": "Yasal süre",
+            "başlangıç_noktası": "Sürenin başladığı nokta",
+            "sonuçları": "Süreyi kaçırmanın sonuçları",
+            "uzatma_imkânları": "Süre uzatma imkânları"
+          }
+        ]
+      },
+      "gerekli_belgeler": [
+        {
+          "belge_adı": "Belge adı",
+          "temin_yeri": "Nereden temin edilir",
+          "temin_şekli": "Nasıl temin edilir (online/fiziksel)",
+          "gerekli_evraklar": ["Temin için gerekli diğer belgeler"],
+          "maliyet": "Belge maliyeti",
+          "süre": "Temin süresi",
+          "geçerlilik_süresi": "Belgenin geçerlilik süresi",
+          "dikkat_noktaları": ["Belge temini için dikkat edilecekler"],
+          "alternatifler": ["Bu belge yerine kullanılabilecek alternatifler"]
+        }
+      ],
+      "şablon_ve_örnekler": {
+        "dilekçe_şablonları": ["Problem türüne özel dilekçe şablonları"],
+        "başvuru_formları": ["Gerekli başvuru formları"],
+        "hesaplama_tabloları": ["Hesaplama için kullanılacak tablolar"],
+        "örnek_davalar": ["Benzer başarılı dava örnekleri"]
+      },
+      "risk_analizi": {
+        "potansiyel_riskler": [
+          {
+            "risk": "Risk tanımı",
+            "olasılık": "Riskin gerçekleşme olasılığı",
+            "etki": "Riskin potansiyel etkisi",
+            "önlem": "Riskin önlenmesi için yapılabilecekler",
+            "alternatif_yaklaşım": "Risk gerçekleşirse alternatif yaklaşımlar"
+          }
+        ],
+        "güçlü_yönler": ["Davanın/durumun güçlü yanları"],
+        "zayıf_yönler": ["Dikkat edilmesi gereken zayıf noktalar"]
+      },
+      "confidence_skoru": 0.0,
+      "güncellik_skoru": 0.0,
+      "kaynak_güvenilirliği": "Bulunan bilgilerin güvenilirlik değerlendirmesi"
+    }
+
+legal_validation_task:
+  description: >
+    RAG ve web arama kaynaklarından gelen hukuki bilgileri entegre et ve değerlendir. 
+    
+    Analiz edilecek hukuki vaka: {topic}
+
+    RAG ve web arama sonuçları:
+    {feedback}
+    
+    **ÖNEMLİ DETAY REHBERLİĞİ: Kullanıcı KAPSAMLI, DETAYLI ve UZUN açıklamalar bekliyor. Her bölümde en az 3-5 cümle kullan. Kısa, genel geçer cevaplar verme. Her argüman, her adım, her öneri için detaylı gerekçelendirme yap.**
+    
+    **YAZIM STİLİ: Uzman seviyesinde, detaylı, analitik, her konuyu derinlemesine işleyen yaklaşım benimse. Her başlık altında kapsamlı bilgi ver.**
+    
+    **ÖNEMLİ NOT: ÇIKTIYI TAM OLARAK AŞAĞIDA BELİRTİLEN MARKDOWN FORMATIYLA DÖNMEN ZORUNLUDUR:**
+    
+    ```
+    ### Detaylı Hukuki Analiz
+    (içerik)
+    
+    ### Güçlü Yönler
+    (içerik)
+    
+    ### Zayıf Yönler
+    (içerik)
+    
+    ### Hukuki Dayanak Analizi
+    (içerik)
+    
+    ### Pratik Öneriler
+    (içerik)
+    
+    ### Risk Yönetimi
+    (içerik)
+    
+    ### Alternatif Çözüm Yolları
+    (içerik)
+    
+    ### Tutarsızlık Analizi
+    (içerik)
+    
+    ### Belirsizlik Alanları
+    (içerik)
+    
+    ### Güven Değerlendirmesi
+    (içerik)
+    ```
+    
+    GÖREV: Text clarifier'dan gelen problem türü analizine göre RAG ve web verilerini 
+    birleştirerek kullanıcıya kapsamlı, uygulanabilir problem çözümü sun. Bu bilgiyi 
+    legal_output_task'a iletilecek şekilde sentezle ve yapılandır. Sonuç raporu 
+    oluşturma görevini legal_output_task yapacaktır.
+    
+    PROBLEM TÜRÜNE GÖRE ANALİZ YAKLAŞIMI:
+    
+    1. HESAPLAMA GEREKLİ PROBLEMLER (miras, tenkis, tazminat vb.):
+       - Detaylı hesaplama analizi ve adım adım formül uygulaması (her adımı 2-3 cümleyle açıkla)
+       - Farklı senaryolar için hesaplama seçenekleri (her senaryo için detaylı açıklama)
+       - Güncel oranlar ve değerlerle örneklendirme (hesaplama sürecini detaylı göster)
+       - Hesaplama hatalarına karşı kontrol listeleri (her kontrol noktasını ayrıntılı açıkla)
+    
+    2. SÜREÇ ODAKLI PROBLEMLER (dava, başvuru vb.):
+       - Kronolojik adım adım yol haritası (her adım için kapsamlı rehberlik)
+       - Her adım için detaylı rehberlik (en az 4-5 cümlelik açıklamalar)
+       - Kritik tarihler ve süreler (her tarih için detaylı önem analizi)
+       - Süreç boyunca dikkat edilecek noktalar (her nokta için kapsamlı uyarılar)
+    
+    3. BELGE ODAKLI PROBLEMLER (sözleşme, başvuru vb.):
+       - Gerekli belgelerin detaylı listesi (her belge için kapsamlı açıklama)
+       - Her belge için temin yolu ve içeriği (ayrıntılı prosedür açıklamaları)
+       - Belge hazırlama ipuçları (her ipucu için detaylı rehberlik)
+       - Eksik belge risklerine karşı önlemler (her önlem için kapsamlı strateji)
+    
+    **DETAY GEREKSİNİMİ HER BÖLÜM İÇİN:**
+    - Hukuki argümanlar: Her argüman için en az 200-300 kelimelik detaylı açıklama
+    - Pratik öneriler: Her öneri için kapsamlı uygulama rehberi
+    - Risk analizi: Her risk için detaylı senaryolar ve kapsamlı önlem stratejileri
+    - Yol haritası: Her aşama için ayrıntılı adım adım kılavuz
+    - Maliyet analizi: Her maliyet kalemi için detaylı açıklama ve gerekçelendirme
+    
+    **ÖNEMLİ: AJANIN ADI "Hukuki Çelişki Tespit ve Entegrasyon Uzmanı" OLMALIDIR ve çıktı mutlaka 
+    yukarıda belirtilen formatta markdown başlıklarını (### ile) içermelidir.**
+    
+    **UZUNLUK REHBERİ:**
+    - Genel değerlendirmeler: En az 5-6 cümle
+    - Hukuki açıklamalar: En az 4-5 cümle
+    - Pratik adımlar: Her adım için en az 3-4 cümle
+    - Risk analizleri: Her risk için en az 3-4 cümle
+    - Alternatif çözümler: Her alternatif için kapsamlı pros/cons analizi
+    
+    HER PROBLEM İÇİN MUTLAKA:
+    - Kullanıcının kafasında net çözüm oluşturacak KAPSAMLI ve DETAYLI açıklamalar
+    - Adım adım takip edilebilir yol haritası (her adım için UZUN açıklamalar)
+    - Tüm gerekli belgeler ve temin yolları (DETAYLI prosedür açıklamaları)
+    - Risk analizi ve önlem önerileri (KAPSAMLI senaryo analizleri)
+    - Alternatif çözüm yolları (her alternatif için DETAYLI değerlendirme)
+    - Başarı olasılığı ve beklenen sonuçlar (UZUN analiz ön planda)
+    
+    **ÇIKTI FORMATI:** Çıktı metni tam olarak yukarıda belirtilen markdown formatında olmalı ve tüm 
+    başlıkları içermelidir. Bu başlıklar scripts.js tarafından doğru işlenebilmesi için kritik öneme sahiptir.
+
+  expected_output: >
+    {
+      "agent": "Hukuki Çelişki Tespit ve Entegrasyon Uzmanı",
+      "raw": "### Detaylı Hukuki Analiz\n(Detaylı hukuki analiz içeriği burada olacak - problem analizi, karmaşıklık düzeyi, yaklaşım stratejisi, değerlendirme)\n\n### Güçlü Yönler\n(Güçlü yönler analizi içeriği burada olacak - argümanlar ve açıklamalar)\n\n### Zayıf Yönler\n(Zayıf yönler analizi içeriği burada olacak - riskler ve iyileştirme önerileri)\n\n### Hukuki Dayanak Analizi\n(Hukuki dayanak analizi içeriği burada olacak - ilgili kanun maddeleri ve açıklamaları)\n\n### Pratik Öneriler\n(Pratik öneriler içeriği burada olacak - öncelikli adımlar ve yapılması gerekenler)\n\n### Risk Yönetimi\n(Risk analizi içeriği burada olacak - potansiyel riskler ve önlem stratejileri)\n\n### Alternatif Çözüm Yolları\n(Alternatif çözüm yolları içeriği burada olacak - farklı yaklaşımlar)\n\n### Tutarsızlık Analizi\n(Tutarsızlık analizi içeriği burada olacak - tespit edilen tutarsızlıklar)\n\n### Belirsizlik Alanları\n(Belirsizlik alanları içeriği burada olacak - kritik belirsizlikler)\n\n### Güven Değerlendirmesi\n(Güven değerlendirmesi içeriği burada olacak - genel güven skoru ve analizi)",
+      "formatted_sections": {
+        "detayli_hukuki_analiz": "(Detaylı hukuki analiz içeriği)",
+        "guclu_yonler": "(Güçlü yönler içeriği)",
+        "zayif_yonler": "(Zayıf yönler içeriği)",
+        "hukuki_dayanak_analizi": "(Hukuki dayanak analizi içeriği)",
+        "pratik_oneriler": "(Pratik öneriler içeriği)",
+        "risk_yonetimi": "(Risk yönetimi içeriği)",
+        "alternatif_cozum_yollari": "(Alternatif çözüm yolları içeriği)",
+        "tutarsizlik_analizi": "(Tutarsızlık analizi içeriği)",
+        "belirsizlik_alanlari": "(Belirsizlik alanları içeriği)",
+        "guven_degerlendirmesi": "(Güven değerlendirmesi içeriği)"
+      }
+    }
+
+legal_feedback_task:
+  description: >
+    {topic}
+    {feedback}
+    
+    Validation çıktısının kalitesini değerlendir. Problem türüne göre eksiklikleri tespit et.
+    Güven düşükse (<{confidence_threshold}) veya önemli eksik bilgi varsa detaylı geri bildirim sağla.
+    
+    PROBLEM TÜRÜNE GÖRE KONTROL:
+    - Hesaplama problemleri: Formüller doğru mu, hesaplamalar eksiksiz mi?
+    - Süreç problemleri: Adımlar net mi, süreler doğru mu?
+    - Belge problemleri: Belgeler eksiksiz mi, temin yolları net mi?
+    
+    Her durumda: Kullanıcı faydasını maksimize edecek iyileştirme önerileri sun.
+  expected_output: >
+    {
+      "needs_reanalysis": false,
+      "kalite_değerlendirmesi": {
+        "genel_kalite_skoru": 0.0,
+        "eksik_alanlar": ["Tespit edilen eksik alanlar"],
+        "güçlü_yönler": ["Analizin güçlü yanları"],
+        "iyileştirme_alanları": ["İyileştirilebilecek alanlar"]
+      },
+      "problem_spesifik_feedback": {
+        "hesaplama_kontrolü": "Hesaplamalar için özel kontrol",
+        "süreç_kontrolü": "Süreç adımları için kontrol",
+        "belge_kontrolü": "Belge listesi için kontrol",
+        "hukuki_dayanak_kontrolü": "Hukuki dayanaklar için kontrol"
+      },
+      "kullanıcı_faydası_analizi": {
+        "anlaşılabilirlik": "Çıktının anlaşılabilirlik düzeyi",
+        "uygulanabilirlik": "Önerilerin uygulanabilirlik düzeyi",
+        "eksiksizlik": "Bilgilerin eksiksizlik düzeyi",
+        "pratiklik": "Çözümlerin pratiklik düzeyi"
+      },
+      "iyileştirme_önerileri": [
+        {
+          "alan": "İyileştirme alanı",
+          "öneri": "Spesifik iyileştirme önerisi",
+          "öncelik": "Yüksek/Orta/Düşük",
+          "beklenen_fayda": "Bu iyileştirmenin beklenen faydası"
+        }
+      ],
+      "kritik_eksikler": ["Mutlaka giderilmesi gereken eksiklikler"],
+      "ek_araştırma_önerileri": ["Yapılması gereken ek araştırmalar"]
+    } 

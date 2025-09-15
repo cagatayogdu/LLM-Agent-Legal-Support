@@ -1,0 +1,26 @@
+services:
+  app:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./db:/usr/src/app/db
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    restart: unless-stopped
+
+  redis:
+    image: "redis:alpine"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+volumes:
+  redis-data: 
+
+  

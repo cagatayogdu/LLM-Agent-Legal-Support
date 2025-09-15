@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hukuki Analiz Sistemi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #3498db, #9b59b6);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: rgb(255, 255, 255);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 32px;
+        }
+        
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-height: 150px;
+            font-family: inherit;
+            font-size: 16px;
+            resize: vertical;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #3498db, #9b59b6);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-right: 10px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        #clearButton {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .result-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            min-height: 200px;
+            display: none;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .loading::after {
+            content: "";
+            display: block;
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+            border-radius: 50%;
+            border: 6px solid #3498db;
+            border-color: #3498db transparent #3498db transparent;
+            animation: loader 1.2s linear infinite;
+        }
+        
+        @keyframes loader {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: white;
+            font-size: 14px;
+            padding: 20px;
+        }
+
+        .security-status {
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .security-status.secure {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .security-status.insecure {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .security-status i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚖️ Hukuki Analiz Sistemi</h1>
+            <div id="securityStatus" class="security-status insecure">
+                <i>🔓</i> Güvenli iletişim başlatılıyor...
+            </div>
+        </header>
+        
+        <div class="form-container">
+            <div class="form-group">
+                <label for="legalCase">Hukuki Durum Açıklaması:</label>
+                <textarea id="legalCase" placeholder="Analiz edilecek hukuki durumu detaylı olarak açıklayın..."></textarea>
+            </div>
+            <div class="button-group">
+                <button id="analyzeButton">Analiz Et</button>
+                <button id="clearButton">Temizle</button>
+            </div>
+        </div>
+        
+        <div id="loading" class="loading"></div>
+        
+        <div id="result" class="result-container"></div>
+        
+        <footer>
+            &copy; 2025 Hukuki Analiz Sistemi. Tüm hakları saklıdır.
+        </footer>
+    </div>
+    
+    <script src="crypto.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
