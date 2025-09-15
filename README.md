@@ -1,7 +1,7 @@
 # LawLMMAgents - Gelişmiş Hukuki Analiz Sistemi
 
 <p align="center">
-  <img width="800" height="600" alt="image" src="https://github.com/user-attachments/assets/821741e2-5db0-4e8e-a716-dec6bb19621e" />
+  <img width="800" height="600" alt="image" src="https://github.com/user-attachments/assets/4525c28c-525f-499a-bab7-ba0b649ad145" />
 </p>
 
 ## 📋 Proje Hakkında
@@ -45,7 +45,7 @@ Bu proje, hukuki analiz alanında **ilk defa multi-agent AI sistemini** kullanar
 Sistem **5 uzmanlaşmış AI ajanından** oluşur ve her ajan farklı hukuki uzmanlık alanında çalışır:
 
 <p align="center">
-  <img width="800" height="477" alt="image" src="https://github.com/user-attachments/assets/e3a008eb-b694-4afe-8f7c-06f8e09624f3" />
+  <img width="800" height="477" alt="image" src="https://github.com/user-attachments/assets/0b8015b7-16f0-432e-b3c8-bc4586c77554" />
 </p>
 
 #### 1. **Hukuki Metin Açıklayıcı Ajanı**
@@ -78,10 +78,17 @@ Sistem **5 uzmanlaşmış AI ajanından** oluşur ve her ajan farklı hukuki uzm
 - Eksik bilgi alanlarını tespit eder ve araştırma önerileri sunar
 - Analiz kalitesini artırmak için veri akışını optimize eder
 
+### RAG Yapısı
+<p align="center">
+  <img width="794" height="453" alt="image" src="https://github.com/user-attachments/assets/c9b780fc-ae03-46c9-b497-221ecad12d8d" />
+</p>
+
+Sistemin bilgi temelini oluşturan vektör veri tabanının hazırlanması süreci, mevzuat.gov.tr adresinden temin edilen yaklaşık 2.500 adet kanun metninin işlenmesiyle başlanmıştır. Bu sürecin genel işleyici şekil’de verilmiştir. Ham PDF belgeleri, doğrudan metin çıkarımına olanak tanıyan PyMuPDF (fitz) kütüphanesi ile işlenildi. Ayrıca, tüm belgelerin içeriklerini teker teker bakamayacağımız için içlerinde taranmış veya resim tabanlı sayfa içeren belgelerde bulanabilir. Bu yüzden, metin kaybını önlemek amacıyla, metin çıkarımının başarısız olduğu durumlarda otomatik olarak devreye giren bir OCR mekanizması entegre edilmiştir. Bu özelleştirilmiş yapıda öncelikle Python da yer alan pdf2image kütüphanesi ile sayfaları görsellere dönüştürülür. Sonrasında PyTesseract motoruyla görseldeki metin verileri çıkartılır. Elde edilen ham metin de ajan için gerekli olmayacak verilerde mevcuttur. Bu nedenle, tasarlanan “clean_legal_text” fonksiyonu aracılığıyla sayfa numaraları, tekrar eden başlıklar, satır sonu karakterleri ve diğer dijital yapaylardan arındırılarak temizlenmiştir.
+
 ## 🛠️ Teknoloji Stack'i
 
 <p align="center">
-  <img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/282112b0-4e81-4819-a39f-a22a9d315503" />
+  <img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/af0d163f-5be6-43bf-9230-2317e89d4439" />
 </p>
 
 ### Backend
@@ -170,7 +177,7 @@ docker-compose logs -f app
 ### Web Arayüzü
 
 <p align="center">
-  <img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/9c9dc575-b6db-4cad-8065-818698a2551c" />
+  <img width="833" height="418" alt="image" src="https://github.com/user-attachments/assets/fb2f098e-5e49-403f-81d1-02ee2f466470" />
 </p>
 
 1. **Ana sayfaya gidin:** `http://localhost:5000`
