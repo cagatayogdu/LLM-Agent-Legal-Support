@@ -127,8 +127,8 @@ Sistemin bilgi temelini oluşturan vektör veri tabanının hazırlanması süre
 
 1. **Repository'yi klonlayın:**
 ```bash
-git clone https://github.com/yourusername/LawLMMAgents.git
-cd LawLMMAgents
+git clone https://github.com/cagatayogdu/LLM-Agent-Legal-Support.git
+cd LLM-Agent-Legal-Support
 ```
 
 2. **Environment dosyasını oluşturun:**
