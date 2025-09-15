@@ -198,8 +198,6 @@ LawLMMAgents/
 │   │   ├── legal_analysis_crew.py
 │   │   ├── legal_feedback_crew.py
 │   │   └── legal_input_processing_crew.py
-│   ├── db/                  # Veritabanı dosyaları
-│   ├── reports/             # Analiz raporları
 │   ├── tools/               # AI araçları
 │   │   └── qdrant_vector_search_tool.py
 │   ├── utils/               # Yardımcı modüller
